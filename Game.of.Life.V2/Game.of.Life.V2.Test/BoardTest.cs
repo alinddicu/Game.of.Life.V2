@@ -6,34 +6,53 @@
     using NFluent;
 
     [TestClass]
-    public class BoardTest
+    public class GridTest
     {
         [TestMethod]
-        public void WhenCreateBoardThenAllCellsAreDead()
+        public void WhenCreateGridThenAllCellsAreDead()
         {
-            var board = new Board(2, 2);
+            var grid = new Grid(2, 2);
 
-            Check.That(board.Cells.Count(c => c.State == CellState.Dead)).Equals(board.Width * board.Length);
+            Check.That(grid.Cells.Count(c => c.State == CellState.Dead)).Equals(grid.Width * grid.Length);
         }
 
         [TestMethod]
-        public void WhenInitAliveCellsOnBoardThenOnlyTheseCellAreAlive()
+        public void WhenInitAliveCellsOnGridThenOnlyTheseCellAreAlive()
         {
-            var board = new Board(3, 3);
+            var grid = new Grid(3, 3);
             var aliveCells = new[] { new Cell(0, 0), new Cell(1, 1), new Cell(2, 2) };
-            board.Init(aliveCells);
+            grid.Init(aliveCells);
 
-            Check.That(board.Cells.Where(c => c.State == CellState.Alive)).ContainsExactly(aliveCells);
+            Check.That(grid.Cells.Where(c => c.State == CellState.Alive)).ContainsExactly(aliveCells);
         }
 
         [TestMethod]
-        public void WhenCreateBoardThenEachCellKnowsItsNeighbours()
+        public void WhenCreateGridOf3by3ThenTheCenterCellHas8Neighbours()
         {
-            var board = new Board(3, 3);
-            var cell11 = board.Cells.Single(c => c.X == 1 && c.Y == 1);
-            var cell11Neighbours = board.Cells.Except(new[] { cell11 });
+            var grid = new Grid(3, 3);
+            var cell11 = grid.Cells.Single(c => c.X == 1 && c.Y == 1);
+            var cell11Neighbours = grid.Cells.Except(new[] { cell11 });
 
+            Check.That(cell11Neighbours).HasSize(8);
             Check.That(cell11.Neighbours).ContainsExactly(cell11Neighbours);
+        }
+
+        [TestMethod]
+        public void WhenCreateGridOf2by2ThenACornerCellHas3Neighbours()
+        {
+            var grid = new Grid(2, 2);
+            var cell00 = grid.Cells.Single(c => c.X == 0 && c.Y == 0);
+
+            Check.That(cell00.Neighbours).HasSize(3);
+        }
+
+        [TestMethod]
+        public void WhenCreateGridOf3by3ThenACornerCellHas3Neighbours()
+        {
+            var grid = new Grid(3, 3);
+            var cell01 = grid.Cells.Single(c => c.X == 0 && c.Y == 1);
+
+            Check.That(cell01.Neighbours).HasSize(5);
         }
     }
 }

@@ -3,9 +3,9 @@
     using System.Linq;
     using System.Collections.Generic;
 
-    public class Board
+    public class Grid
     {
-        public Board(int width, int length)
+        public Grid(int width, int length)
         {
             Width = width;
             Length = length;
@@ -35,9 +35,11 @@
 
         private void SetCellNeighbours(Cell cell)
         {
-            for (int x = cell.X - 1; IsXInNeighbourRange(cell, x); x++)
+            var startX = cell.X - 1 < 0 ? 0 : cell.X - 1;
+            var startY = cell.Y - 1 < 0 ? 0 : cell.Y - 1;
+            for (int x = startX; IsXInNeighbourRange(cell, x); x++)
             {
-                for (int y = cell.Y - 1; IsYInNeighbourRange(cell, y); y++)
+                for (int y = startY; IsYInNeighbourRange(cell, y); y++)
                 {
                     AddNeighbourToCell(cell, x, y);
                 }

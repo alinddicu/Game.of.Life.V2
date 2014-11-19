@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
+    <Compile Include="Grid.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="CellState.cs" />
     <Compile Include="Program.cs" />
