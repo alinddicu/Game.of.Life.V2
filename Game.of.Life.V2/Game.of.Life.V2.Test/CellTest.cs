@@ -15,8 +15,8 @@
         // TDD - 1st rule -> 1st test
         public void Given1AliveCellWith1AliveNeighbourWhenMutateThenCellDies()
         {
-            var cell = new Cell();
-            cell.AddNeighbour(new Cell());
+            var cell = new Cell(1, 1);
+            cell.AddNeighbours(new Cell(1, 2));
             cell.Mutate();
 
             Check.That(cell.State).Equals(CellState.Dead);
@@ -26,9 +26,9 @@
         // TDD - useless test as it's green when designed
         public void Given1DeadCellWith1AliveNeighboursWhenMutateThenCellStaysDead()
         {
-            var cell = new Cell();
+            var cell = new Cell(1, 1);
             cell.State = CellState.Dead;
-            cell.AddNeighbour(new Cell());
+            cell.AddNeighbours(new Cell(1, 2));
             cell.Mutate();
 
             Check.That(cell.State).Equals(CellState.Dead);
@@ -38,12 +38,12 @@
         // TDD - 2nd rule -> useless test as it's green when designed
         public void Given1AliveCellWithMoreThan3AliveNeighboursWhenMutateThenCellDies()
         {
-            var cell = new Cell();
-            cell.AddNeighbour(new Cell(), new Cell());
+            var cell = new Cell(1, 1);
+            cell.AddNeighbours(new Cell(0, 1), new Cell(1, 0));
             cell.Mutate();
             Check.That(cell.State).Equals(CellState.Alive);
 
-            cell.AddNeighbour(new Cell());
+            cell.AddNeighbours(new Cell(1, 2));
             cell.Mutate();
             Check.That(cell.State).Equals(CellState.Alive);
         }
@@ -52,8 +52,8 @@
         // TDD - 3rd rule -> good test as it's red when designed
         public void Given1AliveCellWith2Or3AliveNeighbourWhenMutateThenCellStaysAlive()
         {
-            var cell = new Cell();
-            cell.AddNeighbour(new Cell(), new Cell(), new Cell(), new Cell());
+            var cell = new Cell(0, 0);
+            cell.AddNeighbours(new Cell(-1, -1), new Cell(-1, 0), new Cell(1, 0), new Cell(0, 1));
             cell.Mutate();
 
             Check.That(cell.State).Equals(CellState.Dead);
@@ -63,12 +63,41 @@
         // TDD - 4th rule -> good test as it's red when designed
         public void Given1AliveCellWith3AliveNeighbourWhenMutateThenCellBecomesAlive()
         {
-            var cell = new Cell();
+            var cell = new Cell(0, 0);
             cell.State = CellState.Dead;
-            cell.AddNeighbour(new Cell(), new Cell(), new Cell());
+            cell.AddNeighbours(new Cell(-1, 0), new Cell(-1, -1), new Cell(1, 1));
             cell.Mutate();
 
             Check.That(cell.State).Equals(CellState.Alive);
+        }
+
+        [TestMethod]
+        public void CheckCellEquality()
+        {
+            var cell11 = new Cell(1, 1);
+            var cell00 = new Cell(0, 0);
+            Check.That(Equals(cell11, cell00)).IsFalse(); 
+            Check.That(cell11 == cell00).IsFalse();
+            Check.That(Equals(cell00, cell00)).IsTrue();
+            Check.That(cell00 == cell00).IsTrue();
+            Check.That(Equals(cell11, null)).IsFalse();
+            Check.That(Equals(null, cell11)).IsFalse();
+        }
+
+        [TestMethod]
+        public void GivenNewCellWhenGetStateTheAlive()
+        {
+            Check.That(new Cell(0, 1).State).IsEqualTo(CellState.Alive);
+        }
+
+        [TestMethod]
+        public void GivenNewCellWithCoordinatesWhenGetCoordinatesThenCoordinatesAreCorrect()
+        {
+            var cell = new Cell(1, 1);
+
+            Check.That(cell.X).Equals(1);
+            Check.That(cell.Y).Equals(1);
+            Check.That(cell.State).IsEqualTo(CellState.Alive);
         }
     }
 }

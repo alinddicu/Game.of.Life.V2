@@ -53,13 +53,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Cell.cs" />
-    <Compile Include="CellState.cs" />
+    <Compile Include="BoardTest.cs" />
     <Compile Include="CellTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Game.of.Life.V2\Game.of.Life.V2.csproj">
+      <Project>{8d190872-9c50-451a-8e68-331e57fb157b}</Project>
+      <Name>Game.of.Life.V2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
