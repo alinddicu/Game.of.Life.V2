@@ -1,6 +1,7 @@
 ﻿namespace Game.of.Life.V2.Test
 {
     using System;
+    using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NFluent;
 
@@ -98,6 +99,20 @@
             Check.That(cell.X).Equals(1);
             Check.That(cell.Y).Equals(1);
             Check.That(cell.State).IsEqualTo(CellState.Alive);
+        }
+
+        [TestMethod]
+        public void Given1CellWhenItsStateChagesThenTheNeighbourKnowsAboutIt()
+        {
+            var grid = new Grid(2, 2);
+            var cell = new Cell(0, 0);
+            grid.Init(cell);
+            cell = grid.Cells.Single(c => c.X == 0 && c.Y == 0);
+            var neighbour1 = grid.Cells.Single(c => c.X == 1 && c.Y == 1);
+
+            cell.State = CellState.Dead;
+            Check.That(neighbour1.Neighbours.Count(n => n.State == CellState.Alive)).Equals(0);
+            Check.That(neighbour1.Neighbours.Count(n => n.State == CellState.Dead)).Equals(3);
         }
     }
 }

@@ -33,25 +33,25 @@
             aliveCells.ToList().ForEach(aliveCell => { Cells.Single(cell => cell == aliveCell).State = aliveCell.State; });
         }
 
-        private void SetCellNeighbours(Cell cell)
+        private void SetCellNeighbours(Cell currentCell)
         {
-            var startX = cell.X - 1 < 0 ? 0 : cell.X - 1;
-            var startY = cell.Y - 1 < 0 ? 0 : cell.Y - 1;
-            for (int x = startX; IsXInNeighbourRange(cell, x); x++)
+            var startX = currentCell.X - 1 < 0 ? 0 : currentCell.X - 1;
+            var startY = currentCell.Y - 1 < 0 ? 0 : currentCell.Y - 1;
+            for (int x = startX; IsXInNeighbourRange(currentCell, x); x++)
             {
-                for (int y = startY; IsYInNeighbourRange(cell, y); y++)
+                for (int y = startY; IsYInNeighbourRange(currentCell, y); y++)
                 {
-                    AddNeighbourToCell(cell, x, y);
+                    AddNeighbourToCell(currentCell, x, y);
                 }
             }
         }
 
         private void AddNeighbourToCell(Cell cell, int x, int y)
         {
-            var neighBour = Cells.Single(c => c.X == x && c.Y == y);
-            if (neighBour != cell)
+            var neighbour = Cells.Single(c => c.X == x && c.Y == y);
+            if (neighbour != cell)
             {
-                cell.AddNeighbours(neighBour);
+                cell.AddNeighbours(neighbour);
             }
         }
 
