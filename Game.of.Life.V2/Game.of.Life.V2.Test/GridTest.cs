@@ -1,5 +1,6 @@
 ﻿namespace Game.of.Life.V2.Test
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,7 +14,7 @@
         {
             var grid = new Grid(2, 2);
 
-            Check.That(grid.Cells.Count(c => c.CurrentState == CellState.Dead)).Equals(grid.Width * grid.Length);
+            Check.That(grid.Cells.Count(c => c.CurrentState == CellState.Dead)).Equals(grid.Width * grid.Height);
         }
 
         [TestMethod]
@@ -53,6 +54,27 @@
             var cell01 = grid.Cells.Single(c => c.X == 0 && c.Y == 1);
 
             Check.That(cell01.Neighbours).HasSize(5);
+        }
+
+        [TestMethod]
+        public void TestGridToString()
+        {
+            var grid = new Grid(2, 2);
+            var aliveCells = new[] { new Cell(0, 0), new Cell(1, 1), new Cell(1, 0) };
+            grid.Init(aliveCells);
+            grid.MutateAndCompleteAllCellsMutation();
+        }
+
+        [TestMethod]
+        public void Given2By2GridWithAliveCellsAt00And11And10WhenMutateAndCompleteAllCellsMutationAllNextStatesAreAlive()
+        {
+            var grid = new Grid(2, 2);
+            var aliveCells = new[] { new Cell(0, 0), new Cell(1, 1), new Cell(1, 0) };
+            grid.Init(aliveCells);
+
+            Check.That(grid.Print()).ContainsExactly("++", Environment.NewLine, " +", Environment.NewLine);
+            grid.MutateAndCompleteAllCellsMutation();
+            Check.That(grid.Print()).ContainsExactly("++", Environment.NewLine, "++", Environment.NewLine);
         }
     }
 }

@@ -98,5 +98,11 @@
         {
             return !Equals(left, right);
         }
+
+        public void CompleteMutation()
+        {
+            CurrentState = NextState.Value;
+            NextState = null;
+        }
     }
 }

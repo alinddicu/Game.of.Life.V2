@@ -114,5 +114,18 @@
             Check.That(neighbour1.Neighbours.Count(n => n.CurrentState == CellState.Alive)).Equals(0);
             Check.That(neighbour1.Neighbours.Count(n => n.CurrentState == CellState.Dead)).Equals(3);
         }
+
+        [TestMethod]
+        public void Given1AliveCellWith1AliveNeighbourWhenCompleteMutationOn1StCellThenTheCurrentStateTakesValueOfTheNextState()
+        {
+            var cell = new Cell(1, 1);
+            cell.AddNeighbours(new Cell(1, 2));
+            cell.Mutate();
+            var oldNextState = cell.NextState;
+            cell.CompleteMutation();
+
+            Check.That(cell.CurrentState).Equals(oldNextState);
+            Check.That(cell.NextState).IsNull();
+        }
     }
 }
