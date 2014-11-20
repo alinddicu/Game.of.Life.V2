@@ -20,7 +20,7 @@
             cell.AddNeighbours(new Cell(1, 2));
             cell.Mutate();
 
-            Check.That(cell.State).Equals(CellState.Dead);
+            Check.That(cell.NextState).Equals(CellState.Dead);
         }
 
         [TestMethod]
@@ -28,11 +28,11 @@
         public void Given1DeadCellWith1AliveNeighboursWhenMutateThenCellStaysDead()
         {
             var cell = new Cell(1, 1);
-            cell.State = CellState.Dead;
+            cell.CurrentState = CellState.Dead;
             cell.AddNeighbours(new Cell(1, 2));
             cell.Mutate();
 
-            Check.That(cell.State).Equals(CellState.Dead);
+            Check.That(cell.NextState).Equals(CellState.Dead);
         }
 
         [TestMethod]
@@ -42,11 +42,11 @@
             var cell = new Cell(1, 1);
             cell.AddNeighbours(new Cell(0, 1), new Cell(1, 0));
             cell.Mutate();
-            Check.That(cell.State).Equals(CellState.Alive);
+            Check.That(cell.NextState).Equals(CellState.Alive);
 
             cell.AddNeighbours(new Cell(1, 2));
             cell.Mutate();
-            Check.That(cell.State).Equals(CellState.Alive);
+            Check.That(cell.NextState).Equals(CellState.Alive);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@
             cell.AddNeighbours(new Cell(-1, -1), new Cell(-1, 0), new Cell(1, 0), new Cell(0, 1));
             cell.Mutate();
 
-            Check.That(cell.State).Equals(CellState.Dead);
+            Check.That(cell.NextState).Equals(CellState.Dead);
         }
 
         [TestMethod]
@@ -65,11 +65,11 @@
         public void Given1AliveCellWith3AliveNeighbourWhenMutateThenCellBecomesAlive()
         {
             var cell = new Cell(0, 0);
-            cell.State = CellState.Dead;
+            cell.CurrentState = CellState.Dead;
             cell.AddNeighbours(new Cell(-1, 0), new Cell(-1, -1), new Cell(1, 1));
             cell.Mutate();
 
-            Check.That(cell.State).Equals(CellState.Alive);
+            Check.That(cell.NextState).Equals(CellState.Alive);
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@
         [TestMethod]
         public void GivenNewCellWhenGetStateTheAlive()
         {
-            Check.That(new Cell(0, 1).State).IsEqualTo(CellState.Alive);
+            Check.That(new Cell(0, 1).CurrentState).IsEqualTo(CellState.Alive);
         }
 
         [TestMethod]
@@ -98,7 +98,7 @@
 
             Check.That(cell.X).Equals(1);
             Check.That(cell.Y).Equals(1);
-            Check.That(cell.State).IsEqualTo(CellState.Alive);
+            Check.That(cell.CurrentState).IsEqualTo(CellState.Alive);
         }
 
         [TestMethod]
@@ -110,9 +110,9 @@
             cell = grid.Cells.Single(c => c.X == 0 && c.Y == 0);
             var neighbour1 = grid.Cells.Single(c => c.X == 1 && c.Y == 1);
 
-            cell.State = CellState.Dead;
-            Check.That(neighbour1.Neighbours.Count(n => n.State == CellState.Alive)).Equals(0);
-            Check.That(neighbour1.Neighbours.Count(n => n.State == CellState.Dead)).Equals(3);
+            cell.CurrentState = CellState.Dead;
+            Check.That(neighbour1.Neighbours.Count(n => n.CurrentState == CellState.Alive)).Equals(0);
+            Check.That(neighbour1.Neighbours.Count(n => n.CurrentState == CellState.Dead)).Equals(3);
         }
     }
 }

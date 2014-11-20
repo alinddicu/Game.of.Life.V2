@@ -11,15 +11,17 @@
         {
             X = x;
             Y = y;
-            State = state;
+            CurrentState = state;
             Neighbours = new List<Cell>();
         }
+
+        public CellState CurrentState { get; set; }
+
+        public CellState? NextState { get; private set; }
 
         public int X { get; private set; }
 
         public int Y { get; private set; }
-
-        public CellState State { get; set; }
 
         public List<Cell> Neighbours { get; private set; }
 
@@ -39,15 +41,16 @@
 
         public void Mutate()
         {
-            var aliveNeighboursCount = Neighbours.Count(n => n.State == CellState.Alive);
+            NextState = CurrentState;
+            var aliveNeighboursCount = Neighbours.Count(n => n.CurrentState == CellState.Alive);
             if (aliveNeighboursCount < 2 || aliveNeighboursCount > 3)
             {
-                State = CellState.Dead;
+                NextState = CellState.Dead;
             }
 
-            if (State == CellState.Dead && aliveNeighboursCount == 3)
+            if (CurrentState == CellState.Dead && aliveNeighboursCount == 3)
             {
-                State = CellState.Alive;
+                NextState = CellState.Alive;
             }
         }
 
@@ -73,7 +76,17 @@
 
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "X : {0}, Y : {1}, State : {2}", X, Y, State);
+            return string.Format(CultureInfo.CurrentCulture, "X : {0}, Y : {1}, State : {2}", X, Y, CurrentState);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                return hashCode;
+            }
         }
 
         public static bool operator ==(Cell left, Cell right)

@@ -13,7 +13,7 @@
         {
             var grid = new Grid(2, 2);
 
-            Check.That(grid.Cells.Count(c => c.State == CellState.Dead)).Equals(grid.Width * grid.Length);
+            Check.That(grid.Cells.Count(c => c.CurrentState == CellState.Dead)).Equals(grid.Width * grid.Length);
         }
 
         [TestMethod]
@@ -23,7 +23,7 @@
             var aliveCells = new[] { new Cell(0, 0), new Cell(1, 1), new Cell(2, 2) };
             grid.Init(aliveCells);
 
-            Check.That(grid.Cells.Where(c => c.State == CellState.Alive)).ContainsExactly(aliveCells);
+            Check.That(grid.Cells.Where(c => c.CurrentState == CellState.Alive)).ContainsExactly(aliveCells);
         }
 
         [TestMethod]

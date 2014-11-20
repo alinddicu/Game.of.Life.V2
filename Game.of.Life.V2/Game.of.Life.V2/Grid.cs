@@ -30,7 +30,7 @@
 
         public void Init(params Cell[] aliveCells)
         {
-            aliveCells.ToList().ForEach(aliveCell => { Cells.Single(cell => cell == aliveCell).State = aliveCell.State; });
+            aliveCells.ToList().ForEach(aliveCell => { Cells.Single(cell => cell == aliveCell).CurrentState = aliveCell.CurrentState; });
         }
 
         private void SetCellNeighbours(Cell currentCell)
