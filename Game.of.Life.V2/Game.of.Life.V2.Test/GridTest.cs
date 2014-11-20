@@ -14,7 +14,7 @@
         {
             var grid = new Grid(2, 2);
 
-            Check.That(grid.Cells.Count(c => c.CurrentState == CellState.Dead)).Equals(grid.Width * grid.Height);
+            Check.That(grid.Cells.Count(c => c.CurrentState == CellState.Dead)).Equals((int)grid.Width * (int)grid.Height);
         }
 
         [TestMethod]
@@ -72,9 +72,9 @@
             var aliveCells = new[] { new Cell(0, 0), new Cell(1, 1), new Cell(1, 0) };
             grid.Init(aliveCells);
 
-            Check.That(grid.Print()).ContainsExactly("++", Environment.NewLine, " +", Environment.NewLine);
+            Check.That(grid.Print()).ContainsExactly("++", " +");
             grid.MutateAndCompleteAllCellsMutation();
-            Check.That(grid.Print()).ContainsExactly("++", Environment.NewLine, "++", Environment.NewLine);
+            Check.That(grid.Print()).ContainsExactly("++", "++");
         }
     }
 }
