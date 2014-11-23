@@ -8,25 +8,32 @@
     {
         public static void Main(string[] args)
         {
+            var gridWidth = 50;
+            var gridHeigth = 50;
+            //var startX = 9 + gridWidth / 2;
+            //var startY = startX + 2 + gridHeigth / 2;
+            var startX = gridWidth / 2;
+            var startY = startX + 2;
             var cells = new List<Cell>
-                            {
-                                new Cell(11, 9), new Cell(11, 10), new Cell(11, 11), new Cell(11, 12),
-                                                 new Cell(12, 10), new Cell(13, 10), new Cell(14, 10),
-                                                 new Cell(12, 11), new Cell(13, 11), new Cell(14, 11),
-                                                 new Cell(12, 12), new Cell(13, 12), new Cell(14, 12)
-                            };
+            {
+                new Cell(startX, startY), new Cell(startX, startY+1), new Cell(startX, startY+2), new Cell(startX, startY+3),
+                                        new Cell(startX+1, startY+1), new Cell(startX+2, startY+1), new Cell(startX+3, startY+1),
+                                        new Cell(startX+1, startY+2), new Cell(startX+2, startY+2), new Cell(startX+3, startY+2),
+                                        new Cell(startX+1, startY+3), new Cell(startX+2, startY+3), new Cell(startX+3, startY+3)
+            };
 
-            var grid = new Grid(27, 27);
+            var grid = new Grid((uint)gridWidth, (uint)gridHeigth);
             grid.Init(cells.ToArray());
 
+            PrintToConsole(grid.Print());
+            Console.ReadLine();
+            Console.SetWindowPosition(0, 0);
             while (true)
             {
-                PrintToConsole(grid.Print());
                 grid.MutateAndCompleteAllCellsMutation();
                 PrintToConsole(grid.Print());
-
                 Thread.Sleep(1000);
-                //Console.ReadLine();
+
                 Console.Clear();
             }
         }

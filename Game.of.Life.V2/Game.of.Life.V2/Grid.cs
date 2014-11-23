@@ -53,7 +53,6 @@
                     line += cell.CurrentState == CellState.Alive ? "+" : " ";
                 }
                 yield return line;
-                yield return Environment.NewLine;
             }
         }
 
