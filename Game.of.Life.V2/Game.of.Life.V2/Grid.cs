@@ -2,8 +2,6 @@
 {
     using System.Linq;
     using System.Collections.Generic;
-    using System.Text;
-    using System;
 
     public class Grid
     {
@@ -13,9 +11,9 @@
             Height = heigth;
             Cells = new List<Cell>();
 
-            for (int x = 0; x < Width; x++)
+            for (var x = 0; x < Width; x++)
             {
-                for (int y = 0; y < Height; y++)
+                for (var y = 0; y < Height; y++)
                 {
                     Cells.Add(new Cell(x, y, CellState.Dead));
                 }
@@ -44,10 +42,10 @@
         public IEnumerable<string> Print()
         {
             var line = string.Empty;
-            for (int yGrid = 0; yGrid < Height; yGrid++)
+            for (var yGrid = 0; yGrid < Height; yGrid++)
             {
                 line = string.Empty;
-                for (int xGrid = 0; xGrid < Width; xGrid++)
+                for (var xGrid = 0; xGrid < Width; xGrid++)
                 {
                     var cell = Cells.Single(c => c.X == xGrid && c.Y == yGrid);
                     line += cell.CurrentState == CellState.Alive ? "+" : " ";
@@ -60,9 +58,9 @@
         {
             var startX = currentCell.X - 1 < 0 ? 0 : currentCell.X - 1;
             var startY = currentCell.Y - 1 < 0 ? 0 : currentCell.Y - 1;
-            for (int xNeighbour = startX; IsXInNeighbourRange(currentCell, xNeighbour); xNeighbour++)
+            for (var xNeighbour = startX; IsXInNeighbourRange(currentCell, xNeighbour); xNeighbour++)
             {
-                for (int yNeighbour = startY; IsYInNeighbourRange(currentCell, yNeighbour); yNeighbour++)
+                for (var yNeighbour = startY; IsYInNeighbourRange(currentCell, yNeighbour); yNeighbour++)
                 {
                     AddNeighbourToCell(currentCell, xNeighbour, yNeighbour);
                 }

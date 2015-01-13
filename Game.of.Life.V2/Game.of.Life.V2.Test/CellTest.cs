@@ -62,7 +62,7 @@
 
         [TestMethod]
         // TDD - 4th rule -> good test as it's red when designed
-        public void Given1AliveCellWith3AliveNeighbourWhenMutateThenCellBecomesAlive()
+        public void Given1DeadCellWith3AliveNeighbourWhenMutateThenCellBecomesAlive()
         {
             var cell = new Cell(0, 0);
             cell.CurrentState = CellState.Dead;
